@@ -10,11 +10,11 @@
     
     <style>
         :root {
-            --bg-dark: #040002;
+            --bg-dark: #030002;
             --primary-glow: #ff1e56;
-            --secondary-glow: #9e002b;
-            --glass-card: rgba(15, 3, 9, 0.65);
-            --glass-border: rgba(255, 30, 86, 0.2);
+            --neon-cyan: #ff007f;
+            --glass-card: rgba(10, 2, 7, 0.45);
+            --glass-border: rgba(255, 30, 86, 0.25);
             --text-main: #ffffff;
             --text-sub: #ffb8c6;
         }
@@ -32,28 +32,50 @@
             color: var(--text-main);
             overflow-x: hidden;
             min-height: 100vh;
+            position: relative;
         }
 
+        /* تأثير أضواء الشفق القطبي الفاخر في الخلفية (Aurora Mesh) */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            z-index: -4;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 30, 86, 0.12), transparent 40%),
+                        radial-gradient(circle at 70% 70%, rgba(158, 0, 43, 0.15), transparent 45%),
+                        radial-gradient(circle at 50% 10%, rgba(255, 0, 127, 0.08), transparent 35%);
+            animation: auroraGlow 25s linear infinite;
+        }
+        @keyframes auroraGlow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* زر الصوت العائم المتحرك */
         .audio-container {
             position: fixed;
-            top: 20px;
-            left: 20px;
+            top: 25px;
+            left: 25px;
             z-index: 1000;
         }
         .audio-btn {
-            background: rgba(255, 30, 86, 0.15);
+            background: rgba(255, 30, 86, 0.1);
             border: 1px solid var(--glass-border);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            width: 50px;
-            height: 50px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            width: 55px;
+            height: 55px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 20px rgba(255, 30, 86, 0.2);
-            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(255, 30, 86, 0.15);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .audio-btn:hover {
+            transform: scale(1.1) rotate(15deg);
         }
 
         .video-bg {
@@ -67,14 +89,15 @@
         .video-bg video {
             width: 100%; height: 100%;
             object-fit: cover;
-            opacity: 0.35;
+            opacity: 0.28;
+            filter: contrast(1.1) brightness(0.9);
         }
         .vignette {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
             z-index: -2;
-            background: radial-gradient(circle, rgba(15,3,9,0.1) 0%, rgba(4,0,2,0.95) 90%);
+            background: radial-gradient(circle, transparent 20%, rgba(3,0,2,0.98) 95%);
             pointer-events: none;
         }
 
@@ -91,13 +114,13 @@
             opacity: 0;
             font-size: var(--h-size);
             animation: moveUpwards var(--h-duration) linear infinite;
-            filter: drop-shadow(0 0 5px var(--primary-glow));
+            filter: drop-shadow(0 0 8px var(--primary-glow));
         }
         @keyframes moveUpwards {
             0% { transform: translateY(105vh) translateX(0) scale(0.6) rotate(0deg); opacity: 0; }
-            15% { opacity: var(--h-opacity); transform: translateY(80vh) translateX(10px) scale(1); }
-            85% { opacity: var(--h-opacity); }
-            100% { transform: translateY(-10vh) translateX(var(--h-drift)) scale(0.7) rotate(320deg); opacity: 0; }
+            20% { opacity: var(--h-opacity); transform: translateY(75vh) translateX(15px) scale(1.1); }
+            80% { opacity: var(--h-opacity); }
+            100% { transform: translateY(-10vh) translateX(var(--h-drift)) scale(0.6) rotate(360deg); opacity: 0; }
         }
 
         .wrapper {
@@ -105,474 +128,40 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 40px 20px;
+            padding: 60px 24px;
             position: relative;
             z-index: 10;
         }
 
+        /* كارت النيون الزجاجي العملاق والمطور (Cyber Glassmorphism) */
         .ultra-card {
             width: 100%;
-            max-width: 1050px;
+            max-width: 1100px;
             background: var(--glass-card);
             border: 1px solid var(--glass-border);
-            border-radius: 40px;
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6), inset 0 1px 2px rgba(255,255,255,0.15);
+            border-radius: 36px;
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            box-shadow: 0 50px 120px rgba(0, 0, 0, 0.75), 
+                        inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                        0 0 40px rgba(255, 30, 86, 0.05);
             display: grid;
-            grid-template-columns: 1.2fr 1fr;
+            grid-template-columns: 1.25fr 1fr;
             overflow: hidden;
+            position: relative;
+        }
+
+        /* خط النيون المتوهج المتحرك في أعلى وأسفل الكارت */
+        .ultra-card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary-glow), var(--neon-cyan), transparent);
+            animation: borderGlow 6s linear infinite;
+        }
+        @keyframes borderGlow {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
         }
 
         .content-side {
-            padding: 60px 50px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .main-title {
-            font-size: 4.5rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #ffffff 30%, var(--text-sub) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 25px;
-            filter: drop-shadow(0 4px 15px rgba(255, 30, 86, 0.3));
-        }
-
-        .story-text {
-            font-size: 1.2rem;
-            font-weight: 300;
-            color: #fceef1;
-            white-space: pre-line;
-            line-height: 1.9;
-            margin-bottom: 35px;
-        }
-
-        /* تصميم عداد الوقت العصري الجديد المقسم */
-        .tech-counter {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 35px;
-            width: 100%;
-        }
-        .tech-counter .label {
-            font-size: 0.9rem;
-            color: var(--text-sub);
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-        .time-display {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            text-align: center;
-        }
-        .time-box {
-            background: rgba(255, 30, 86, 0.08);
-            border: 1px solid rgba(255, 30, 86, 0.15);
-            border-radius: 12px;
-            padding: 10px 5px;
-        }
-        .time-box .num {
-            font-family: monospace, sans-serif;
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: #ffffff;
-            text-shadow: 0 0 10px var(--primary-glow);
-            display: block;
-        }
-        .time-box .unit {
-            font-size: 0.75rem;
-            color: var(--text-sub);
-            display: block;
-            margin-top: 2px;
-        }
-
-        .luxury-btn {
-            background: linear-gradient(135deg, #ff1e56 0%, #9e002b 100%);
-            border: none;
-            padding: 18px 45px;
-            font-family: 'Alexandria', sans-serif;
-            font-size: 1.15rem;
-            font-weight: 800;
-            color: #ffffff;
-            border-radius: 20px;
-            cursor: pointer;
-            box-shadow: 0 10px 30px rgba(255, 30, 86, 0.4);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            align-self: flex-start;
-        }
-        .luxury-btn:hover {
-            transform: translateY(-3px) scale(1.03);
-            box-shadow: 0 15px 40px rgba(255, 30, 86, 0.6);
-        }
-
-        .visual-side {
-            position: relative;
-            background: rgba(0, 0, 0, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 40px;
-        }
-
-        .gallery-container {
-            width: 100%;
-            height: 100%;
-            min-height: 550px;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .gallery-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text-sub);
-            text-shadow: 0 0 10px rgba(255, 30, 86, 0.5);
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .slideshow-wrapper {
-            position: relative;
-            width: 100%;
-            height: 420px;
-            border-radius: 28px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-        }
-
-        .slide-img {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            object-fit: cover;
-            opacity: 0;
-            transform: scale(1.1);
-            transition: opacity 1s ease-in-out, transform 1.2s ease-in-out;
-        }
-        .slide-img.active {
-            opacity: 0.75;
-            transform: scale(1);
-        }
-
-        .secret-overlay-box {
-            position: absolute;
-            inset: 20px;
-            background: rgba(10, 2, 6, 0.92);
-            border: 1px solid rgba(255, 30, 86, 0.35);
-            border-radius: 32px;
-            padding: 40px 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            opacity: 0;
-            transform: scale(0.9) translateY(20px);
-            pointer-events: none;
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            z-index: 30;
-        }
-        .secret-overlay-box.reveal {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-            pointer-events: auto;
-        }
-
-        .big-heart-icon {
-            color: var(--primary-glow);
-            font-size: 4.5rem;
-            margin-bottom: 25px;
-            animation: pulseGlow 1.5s infinite alternate;
-        }
-        @keyframes pulseGlow {
-            0% { transform: scale(1); filter: drop-shadow(0 0 10px var(--primary-glow)); }
-            100% { transform: scale(1.1); filter: drop-shadow(0 0 25px var(--primary-glow)); }
-        }
-
-        .secret-text {
-            font-size: 1.2rem;
-            line-height: 1.8;
-            color: #ffffff;
-            white-space: pre-line;
-        }
-
-        @media (max-width: 1024px) {
-            .ultra-card {
-                grid-template-columns: 1fr;
-                border-radius: 30px;
-            }
-            .content-side {
-                padding: 45px 30px;
-            }
-            .visual-side {
-                padding: 30px 20px;
-                min-height: auto;
-                background: rgba(0, 0, 0, 0.4);
-                border-top: 1px solid rgba(255, 255, 255, 0.08);
-            }
-            .gallery-container {
-                min-height: auto;
-                width: 100%;
-            }
-            .slideshow-wrapper {
-                height: 380px;
-            }
-            .main-title { font-size: 3.2rem; }
-            .story-text { font-size: 1.1rem; }
-        }
-
-        @media (max-width: 480px) {
-            .wrapper { padding: 15px 10px; }
-            .content-side { padding: 35px 20px; }
-            .main-title { font-size: 2.6rem; }
-            .slideshow-wrapper { height: 320px; }
-            .secret-text { font-size: 1.05rem; }
-            .time-box .num { font-size: 1.2rem; }
-        }
-    </style>
-</head>
-<body>
-
-    <audio id="love-track" loop>
-        <source src="song.mp3" type="audio/mpeg">
-    </audio>
-
-    <div class="audio-container">
-        <button class="audio-btn" id="audioToggleBtn">
-            <svg id="speaker-icon" viewBox="0 0 24 24" width="20" height="20" stroke="#ffb8c6" stroke-width="2" fill="none"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
-        </button>
-    </div>
-
-    <div class="video-bg">
-        <video autoplay muted loop playsinline>
-            <source src="https://player.vimeo.com/external/459389137.hd.mp4?s=87af39d332d73f4e9dae4c1977756f4d25725f77&profile_id=170&oauth2_token_id=57447761" type="video/mp4">
-        </video>
-    </div>
-    <div class="vignette"></div>
-    <div id="hearts-layer"></div>
-
-    <div class="wrapper">
-        <main class="ultra-card">
-            
-            <div class="content-side">
-                <h1 class="main-title">Mary ❤️</h1>
-                <p class="story-text">يمكن أحسن حاجة حصلتلي
-إننا رجعنا لبعض.
-
-لأن الحقيقة؟
-
-أنا عمري ما بطلت أحبك.
-
-حتى في الوقت اللي كنا بعيد فيه،
-كان دايمًا فيه جزء مني
-متمسك بيكي.
-
-ودلوقتي؟
-أنا مبسوط إنك هنا تاني ❤️</p>
-
-                <p class="story-text" style="margin-bottom: 20px;">بحب تفاصيلك.
-طريقتك.
-ضحكتك.
-وجودك.
-
-وبحب فكرة
-إن مهما حصل بينا...
-
-عرفنا نرجع لبعض تاني.</p>
-
-                <div class="tech-counter">
-                    <div class="label">✨ الوقت اللي عشناه سوا :</div>
-                    <div class="time-display">
-                        <div class="time-box">
-                            <span class="num" id="days-val">0</span>
-                            <span class="unit">يوم</span>
-                        </div>
-                        <div class="time-box">
-                            <span class="num" id="hours-val">0</span>
-                            <span class="unit">ساعة</span>
-                        </div>
-                        <div class="time-box">
-                            <span class="num" id="minutes-val">0</span>
-                            <span class="unit">دقيقة</span>
-                        </div>
-                        <div class="time-box">
-                            <span class="num" id="seconds-val">0</span>
-                            <span class="unit">ثانية</span>
-                        </div>
-                    </div>
-                </div>
-
-                <button class="luxury-btn" id="triggerRevealBtn">اضغطي هنا ✨</button>
-            </div>
-
-            <div class="visual-side">
-                <div class="gallery-container">
-                    <h2 class="gallery-title">احلى صور اتصورتهم ماري ✨</h2>
-                    
-                    <div class="slideshow-wrapper">
-                        <img src="mary1.jpg" class="slide-img active" alt="Mary">
-                        <img src="mary2.jpg" class="slide-img" alt="Mary">
-                        <img src="mary3.jpg" class="slide-img" alt="Mary">
-                        <img src="mary4.jpg" class="slide-img" alt="Mary">
-                        <img src="mary5.jpg" class="slide-img" alt="Mary">
-                        <img src="mary6.jpg" class="slide-img" alt="Mary">
-                        <img src="mary7.jpg" class="slide-img" alt="Mary">
-                    </div>
-                </div>
-
-                <div class="secret-overlay-box" id="secretDisplayBox">
-                    <div class="big-heart-icon">❤️</div>
-                    <p class="secret-text">يا Mary...
-
-أنا مش عايز منك حاجة غير
-إنك تفضلي معايا.
-
-لأن وجودك لوحده
-مريح قلبي بشكل
-مش بعرف أوصفه.
-
-وبجد...
-أنا بحبك ❤️</p>
-                </div>
-            </div>
-
-        </main>
-    </div>
-
-    <script>
-        // --- 1. إدارة تشغيل الصوت التلقائي ---
-        const audioTrack = document.getElementById('love-track');
-        const audioToggleBtn = document.getElementById('audioToggleBtn');
-        let musicPlaying = false;
-
-        function initializeAudio() {
-            audioTrack.play().then(() => {
-                musicPlaying = true;
-                syncAudioBtnStyle();
-            }).catch(() => {
-                const triggerPlay = () => {
-                    if (!musicPlaying) {
-                        audioTrack.play();
-                        musicPlaying = true;
-                        syncAudioBtnStyle();
-                    }
-                };
-                window.addEventListener('click', triggerPlay, { once: true });
-                window.addEventListener('touchstart', triggerPlay, { once: true });
-            });
-        }
-        window.addEventListener('DOMContentLoaded', initializeAudio);
-
-        audioToggleBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            if (musicPlaying) { audioTrack.pause(); musicPlaying = false; } 
-            else { audioTrack.play(); musicPlaying = true; }
-            syncAudioBtnStyle();
-        });
-
-        function syncAudioBtnStyle() {
-            audioToggleBtn.style.boxShadow = musicPlaying ? '0 0 25px rgba(255, 30, 86, 0.6)' : 'none';
-            audioToggleBtn.style.borderColor = musicPlaying ? 'var(--primary-glow)' : 'var(--glass-border)';
-        }
-
-        // --- 2. العداد الحقيقي الدقيق من تاريخ 9 نوفمبر 2025 ---
-        // تم ضبط التاريخ بدقة كاملة بالملي ثانية
-        const anniversaryDate = new Date('2025-11-09T00:00:00').getTime(); 
-        
-        const dVal = document.getElementById('days-val');
-        const hVal = document.getElementById('hours-val');
-        const mVal = document.getElementById('minutes-val');
-        const sVal = document.getElementById('seconds-val');
-
-        function calculateLiveTime() {
-            const now = Date.now();
-            const difference = now - anniversaryDate;
-
-            // حسابات الوقت الرياضية الدقيقة
-            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-
-            // تمرير الأرقام للـ HTML مع الحفاظ على التنسيق الأجنبي للأرقام عشان ما تبوظش الاستايل
-            dVal.textContent = days.toLocaleString('en-US');
-            hVal.textContent = hours.toString().padStart(2, '0');
-            mVal.textContent = minutes.toString().padStart(2, '0');
-            sVal.textContent = seconds.toString().padStart(2, '0');
-        }
-        setInterval(calculateLiveTime, 1000);
-        calculateLiveTime();
-
-        // --- 3. نظام إطلاق القلوب (190+ قلب) ---
-        const heartsLayer = document.getElementById('hearts-layer');
-        const heartSymbols = ['❤️', '💖', '✨', '💕', '❤️', '💝'];
-        const totalHearts = 195;
-
-        for (let i = 0; i < totalHearts; i++) {
-            const heartDiv = document.createElement('div');
-            heartDiv.classList.add('floating-heart');
-            heartDiv.innerText = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
-            
-            const randomX = Math.random() * 100;
-            const size = Math.random() * 16 + 10;
-            const duration = Math.random() * 15 + 8;
-            const negativeDelay = Math.random() * -30; 
-            const opacity = Math.random() * 0.4 + 0.15;
-            const driftX = (Math.random() - 0.5) * 150;
-
-            heartDiv.style.left = `${randomX}vw`;
-            heartDiv.style.setProperty('--h-size', `${size}px`);
-            heartDiv.style.setProperty('--h-duration', `${duration}s`);
-            heartDiv.style.animationDelay = `${negativeDelay}s`;
-            heartDiv.style.setProperty('--h-opacity', opacity);
-            heartDiv.style.setProperty('--h-drift', `${driftX}px`);
-
-            heartsLayer.appendChild(heartDiv);
-        }
-
-        // --- 4. سلايدر الصور السبعة بتأثير الـ Fade ---
-        const images = document.querySelectorAll('.slide-img');
-        let currentSlideIndex = 0;
-
-        function rotateSlides() {
-            images[currentSlideIndex].classList.remove('active');
-            currentSlideIndex = (currentSlideIndex + 1) % images.length;
-            images[currentSlideIndex].classList.add('active');
-        }
-        setInterval(rotateSlides, 3000);
-
-        // --- 5. تأثير كشف الكرت السري ---
-        const triggerRevealBtn = document.getElementById('triggerRevealBtn');
-        const secretDisplayBox = document.getElementById('secretDisplayBox');
-
-        triggerRevealBtn.addEventListener('click', () => {
-            secretDisplayBox.classList.toggle('reveal');
-            if (secretDisplayBox.classList.contains('reveal')) {
-                triggerRevealBtn.innerText = "اغلاق الرسالة ✨";
-                if(window.innerWidth <= 1024) {
-                    setTimeout(() => {
-                        secretDisplayBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }, 200);
-                }
-            } else {
-                triggerRevealBtn.innerText = "اضغطي هنا ✨";
-            }
-        });
-    </script>
-</body>
-</html>
